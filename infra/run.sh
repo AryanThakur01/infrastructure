@@ -20,13 +20,13 @@ if [ "$COMMAND" == "tfworkspace" ]; then
 elif [ "$COMMAND" == "tfplan" ]; then
   # Command for planning Terraform changes
   terraform workspace select "$ENV"
-  terraform plan -var-file="environments/$ENV.tfvars"
+  terraform plan -var-file="environments/terraform/$ENV.tfvars"
   exit 0
 
 elif [ "$COMMAND" == "tfapply" ]; then
   # Command for applying Terraform changes
   terraform workspace select "$ENV"
-  terraform apply -var-file="environments/$ENV.tfvars"
+  terraform apply -var-file="environments/terraform/$ENV.tfvars"
   exit 0
 
 elif [ "$COMMAND" == "tfsensitivekeys" ]; then
