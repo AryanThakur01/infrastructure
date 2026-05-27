@@ -1,0 +1,18 @@
+# CODEOWNERS
+# Each line is a pattern followed by one or more owners.
+# Owners are automatically requested for review when a PR touches matching files.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global fallback — all files
+*                   @AryanThakur01
+
+# # Docs
+# docs/               @your-username
+# *.md                @your-username
+#
+# # CI/CD — require senior review
+# .github/            @your-username
+#
+# # Security-sensitive files
+# SECURITY.md         @your-username
+# .env.example        @your-username

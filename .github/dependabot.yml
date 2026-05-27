@@ -1,0 +1,37 @@
+version: 2
+
+updates:
+  # npm / JavaScript / TypeScript
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - chore
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]  # skip patch-only PRs
+
+  # Python
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - chore
+
+  # GitHub Actions themselves
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - ci
