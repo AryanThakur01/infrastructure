@@ -5,7 +5,7 @@ source "$(dirname "$0")/check-aws-context.sh"
 
 # Constants
 S3_TERRAFORM_BUCKET_REGION="ap-south-1"
-S3_TERRAFORM_BUCKET_NAME="terraform-state-${CURRENT_ACCOUNT}"
+S3_TERRAFORM_BUCKET_NAME="terraform-state-aryan-infra"
 SERVER_SIDE_ENCRYPTION_CONFIGURATION='{
   "Rules": [{
     "ApplyServerSideEncryptionByDefault": {

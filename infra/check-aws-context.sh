@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source ./environments/scripts/.env
+source "$(dirname "$0")/aws-profile.sh"
+source "$(dirname "$0")/environments/scripts/.env"
 
 EXPECTED_REGION="ap-south-1"
 if [ -z "$EXPECTED_AWS_ACCOUNT_ID" ]; then
