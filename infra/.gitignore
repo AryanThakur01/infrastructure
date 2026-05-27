@@ -1,0 +1,2 @@
+environments/scripts/.env*
+environments/terraform/*.tfvars
