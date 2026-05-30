@@ -52,7 +52,16 @@ variable "error_document" {
 
 variable "bucket_policy" {
   type        = string
-  description = "JSON bucket policy to attach. Leave null to attach no policy."
+  description = <<-EOT
+    JSON bucket policy. Use aws_iam_policy_document and pass the 
+    .json attribute. Do not pass raw JSON strings directly.
+  EOT
+
+  validation {
+    condition     = var.bucket_policy == null || can(jsondecode(var.bucket_policy))
+    error_message = "bucket_policy must be valid JSON or null."
+  }
+
   default     = null
 }
 
@@ -60,4 +69,22 @@ variable "tags" {
   type        = map(string)
   description = "Tags to apply to the bucket. Use this to pass environment, project, owner, etc."
   default     = {}
+}
+
+variable "force_destroy" {
+  type        = bool
+  description = "Whether to force destroy the bucket when deleting. If true, all objects (including versions) will be deleted. Use with caution."
+  default     = false
+}
+
+variable "noncurrent_version_expiry_days" {
+  type        = number
+  default     = 30
+  description = "Days before noncurrent object versions are expired. Only applies when versioning is enabled."
+}
+
+variable "enable_lifecycle_rule" {
+  type        = bool
+  default     = true
+  description = "Enables noncurrent version expiry. Keep true even when suspending versioning to clean up existing versions."
 }
