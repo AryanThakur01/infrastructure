@@ -3,7 +3,7 @@ data "aws_region" "current" {}
 
 // 1. Create an S3 bucket for storing Terraform state files
 resource "aws_s3_bucket" "portfolio" {
-  bucket = format("${var.project_name}-${terraform.workspace}-%s-%s-an", data.aws_caller_identity.current.account_id, data.aws_region.current.region)
+  bucket = format("${var.project_name}-${terraform.workspace}-%s-%s", data.aws_caller_identity.current.account_id, data.aws_region.current.region)
   tags = {
     Environment = terraform.workspace
   }
