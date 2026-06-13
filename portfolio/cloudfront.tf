@@ -2,7 +2,7 @@ locals {
   s3_origin_id = "S3-${aws_s3_bucket.portfolio.id}"
   domains = {
     "staging"    = "staging.aryanthakur.dev",
-    "production" = "aryanthakur.dev"
+    "prod" = "aryanthakur.dev"
   }
   domain_name = local.domains[terraform.workspace]
 }
