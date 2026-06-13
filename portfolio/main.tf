@@ -7,8 +7,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "terraform-state-aryan-infra"
-    key            = "aryan-infra/terraform.tfstate"
+    bucket         = "terraform-state-portfolio-aryan"
+    key            = "portfolio-aryan/terraform.tfstate"
     region         = "ap-south-1"
     dynamodb_table = "terraform-state-locks"
     encrypt        = true
