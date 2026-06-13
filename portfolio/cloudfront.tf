@@ -1,6 +1,10 @@
 locals {
   s3_origin_id = "S3-${aws_s3_bucket.portfolio.id}"
-  domain_name  = "aryanthakur.dev"
+  domains = {
+    "staging"    = "staging.aryanthakur.dev",
+    "production" = "aryanthakur.dev"
+  }
+  domain_name = local.domains[terraform.workspace]
 }
 
 // Use the managed caching policy for optimized caching of static assets
@@ -61,5 +65,8 @@ resource "aws_cloudfront_distribution" "portfolio" {
   }
 
   viewer_certificate {
+    acm_certificate_arn      = aws_acm_certificate.portfolio.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 }
