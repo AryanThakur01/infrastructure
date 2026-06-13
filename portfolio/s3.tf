@@ -35,7 +35,7 @@ data "aws_iam_policy_document" "portfolio_oac" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = [""] // TODO: Add the CloudFront distribution ARN here
+      values   = [aws_cloudfront_distribution.portfolio.arn]
     }
   }
 }
