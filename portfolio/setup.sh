@@ -14,7 +14,7 @@ SERVER_SIDE_ENCRYPTION_CONFIGURATION='{
   }]
 }'
 DYNAMODB_TABLE_NAME="terraform-state-locks"
-ENVIRONMENTS=("staging" "production")
+ENVIRONMENTS=("staging" "prod")
 
 # AWS S3 Setup
 if aws s3api head-bucket --bucket "$S3_TERRAFORM_BUCKET_NAME" 2>/dev/null; then

@@ -1,8 +1,17 @@
+variable "project_name" {
+  description = "The name of the project"
+  type        = string
+}
+variable "environment" {
+  description = "The environment for the project (e.g., dev, staging, prod)"
+  type        = string
+}
+
 terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 6.50.0"
     }
   }
 

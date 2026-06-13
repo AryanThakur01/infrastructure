@@ -6,7 +6,7 @@ source "$(dirname "$0")/check-aws-context.sh"
 ENV="$1"
 COMMAND="$2"
 
-SUPPORTED_ENVS=("staging" "production") # created in setup.sh
+SUPPORTED_ENVS=("staging" "prod") # created in setup.sh
 if [[ ! " ${SUPPORTED_ENVS[@]} " =~ " ${ENV} " ]]; then
   echo "Unsupported environment: $ENV"
   echo "Supported environments are: ${SUPPORTED_ENVS[*]}"
