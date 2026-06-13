@@ -94,3 +94,9 @@ resource "aws_s3_bucket_ownership_controls" "this" {
     object_ownership = "BucketOwnerEnforced"
   }
 }
+
+// OUTPUTS
+output "s3_bucket_name" {
+  value       = aws_s3_bucket.portfolio.bucket
+  description = "The name of the S3 bucket for storing Terraform state files"
+}
