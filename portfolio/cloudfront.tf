@@ -36,7 +36,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
   origin {
     origin_id                = local.s3_origin_id
     domain_name              = aws_s3_bucket.portfolio.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.portfolio_s3.id
   }
 
   default_cache_behavior {
@@ -49,7 +49,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
 
     function_association {
       event_type   = "viewer-request"
-      function_arn = aws_lambda_function.add_security_headers.arn
+      function_arn = aws_cloudfront_function.spa_rewrite.arn
     }
   }
 
