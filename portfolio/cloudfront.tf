@@ -32,6 +32,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
   comment             = "Portfolio CloudFront Distribution"
   default_root_object = "index.html"
   aliases             = [local.domain_name]
+  price_class         = "PriceClass_200" # Use the lowest price class for global coverage
 
   origin {
     origin_id                = local.s3_origin_id
