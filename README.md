@@ -3,7 +3,7 @@
 > This is the infrastructure I use on my cloud provider
 
 [![CI](https://github.com/AryanThakur01/infrastructure/actions/workflows/ci.yml/badge.svg)](https://github.com/AryanThakur01/infrastructure/actions/workflows/ci.yml)
-[![License](https://img.shields.io/github/license/AryanThakur01/infrastructure)](LICENSE)
+[![License](https://img.shields.io/github/license/AryanThakur01/infrastructure?v=2)](LICENSE)
 
 ---
 
