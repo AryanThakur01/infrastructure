@@ -4,7 +4,6 @@
 
 [![CI](https://github.com/AryanThakur01/infrastructure/actions/workflows/ci.yml/badge.svg)](https://github.com/AryanThakur01/infrastructure/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/AryanThakur01/infrastructure)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 ---
 
