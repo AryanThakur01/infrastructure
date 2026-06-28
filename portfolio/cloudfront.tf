@@ -1,8 +1,8 @@
 locals {
   s3_origin_id = "S3-${aws_s3_bucket.portfolio.id}"
   domains = {
-    "staging"    = "staging.aryanthakur.dev",
-    "prod" = "aryanthakur.dev"
+    "staging"    = ["staging.aryanthakur.dev"],
+    "prod" = ["aryanthakur.dev", "www.aryanthakur.dev"]
   }
   domain_name = local.domains[terraform.workspace]
 }
@@ -35,7 +35,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
   is_ipv6_enabled     = true
   comment             = "Portfolio CloudFront Distribution"
   default_root_object = "index.html"
-  aliases             = [local.domain_name]
+  aliases             = local.domain_name
   price_class         = "PriceClass_200" # Use the lowest price class for global coverage
 
   origin {
