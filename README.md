@@ -12,12 +12,6 @@
 
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Development Guide](#development-guide)
-- [Good Coding Practices](#good-coding-practices)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
@@ -46,53 +40,6 @@ This is primarily for me, but I also welcome contributions from the community to
 | Layer       | Technology |
 |-------------|------------|
 | Language    | Terraform  |
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- TBD
-
-### Installation
-
-- TBD
-
----
-
-## Project Structure
-
-- TBD
-
----
-
-## Development Guide
-
-See detailed guides for your specific stack:
-
-| Type | Guide |
-|------|-------|
-| Web / Full-stack | [docs/guides/web-fullstack.md](docs/guides/web-fullstack.md) |
-
----
-
----
-
-## Deployment
-
-See [docs/deployment.md](docs/deployment.md) for full deployment guide.
-
-```bash
-# Quick deploy
-bash scripts/deploy.sh
-```
-
----
-
-## Contributing
-
-I welcome all contributions. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
