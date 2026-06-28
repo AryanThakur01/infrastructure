@@ -19,18 +19,9 @@
 
 This project provides a standardized infrastructure setup for my cloud provider, enabling me to quickly deploy and manage my applications with best practices in mind.
 
-- **What** it does?
-```
-This repository contains Terraform configurations, CI/CD pipelines, and documentation to set up and maintain a secure, scalable, and cost-effective cloud infrastructure.
-```
-- **Why** it exists
-```
-I want to have a reusable and well-documented infrastructure template that I can use across all my projects, ensuring consistency and reducing setup time.
-```
-- **Who** it's for
-```
-This is primarily for me, but I also welcome contributions from the community to improve and expand the infrastructure setup.
-```
+- **What it does?:** This repository contains Terraform configurations, CI/CD pipelines, and documentation to set up and maintain a secure, scalable, and cost-effective cloud infrastructure.
+- **Why it exists?:** I created this project to streamline the process of deploying and managing my cloud resources, ensuring consistency and reliability across different environments.
+- **Who it's for?:** This project is for me, but it can also serve as a reference for others looking to implement similar infrastructure setups.
 
 ---
 
