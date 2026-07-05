@@ -1,7 +1,7 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../../dist/llm"
+    "outDir": "../../../dist/process_sqs_event"
   },
   "include": ["./**/*"]
 }
