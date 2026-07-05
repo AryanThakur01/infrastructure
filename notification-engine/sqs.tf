@@ -1,15 +1,15 @@
 locals {
   queues = {
     high = {
-      max_concurrency    = 10
+      max_concurrency    = 3
       visibility_timeout = 30
     }
     medium = {
-      max_concurrency    = 5
+      max_concurrency    = 2
       visibility_timeout = 30
     }
     low = {
-      max_concurrency    = 2
+      max_concurrency    = 1
       visibility_timeout = 30
     }
   }
