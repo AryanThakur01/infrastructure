@@ -1,0 +1,29 @@
+{
+  "name": "mandos-file-service",
+  "version": "1.0.0",
+  "description": "A file service for Mandos",
+  "license": "ISC",
+  "author": "Mandos",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -b src/functions/* && cp package.json dist/process_sqs_event/ && cd dist/process_sqs_event && npm install --production",
+    "sam:build": "sam build --use-container",
+    "sam:start": "sam local start-api",
+    "dev": "npm run build && npm run sam:build && npm run sam:start",
+    "zip": "mkdir -p zips && for d in dist/*; do name=$(basename $d); cd $d && zip -r ../../../zips/$name.zip . && cd -; done",
+    "build:zip": "npm run build && npm run zip",
+    "clean": "rm -rf dist zips",
+    "test": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' test.ts"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.159",
+    "@types/node": "^25.0.7",
+    "prettier": "^3.7.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "cuid": "^3.0.0",
+    "zod": "^3.24.2"
+  }
+}

@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  VideoLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: video-upload
+      # CodeUri points to the folder containing handler.js
+      CodeUri: dist/process_sqs_event
+      Handler: handler.handler   # file 'handler.js', export 'handler'
+      Runtime: nodejs18.x
+      MemorySize: 1024
+      Timeout: 60
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /video
+            Method: post
+
+  VideoApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: video-api
+      StageName: Prod
+      BinaryMediaTypes:
+        - multipart/form-data
