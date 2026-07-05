@@ -4,11 +4,22 @@ import { HttpStatusCode } from './constants';
 import { IResponse } from './interfaces/response';
 import { sendResponse } from './utils/response';
 import { ApiError } from './utils/errors';
+import { eventSchema } from './schemas';
 
 export const handler: Handler<unknown, IResponse> = async (event) => {
   console.log('Received event:', JSON.stringify(event, null, 2));
 
   try {
+    const body = eventSchema.parse(event);
+
+    const webhookUrl = body.webhookUrl;
+
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body.data)
+    });
+
     return sendResponse({
       statusCode: HttpStatusCode.NOT_IMPLEMENTED,
       message: 'This Lambda function is not yet implemented.'
