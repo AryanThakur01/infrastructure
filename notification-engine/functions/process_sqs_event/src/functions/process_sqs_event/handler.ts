@@ -1,42 +1,33 @@
-// Lambda Invocation Handler
-import { Handler } from 'aws-lambda';
-import { HttpStatusCode } from './constants';
-import { IResponse } from './interfaces/response';
-import { sendResponse } from './utils/response';
-import { ApiError } from './utils/errors';
+import { SQSBatchResponse, SQSHandler } from 'aws-lambda';
 import { eventSchema } from './schemas';
+import { sendResponse } from './utils/response';
 
-export const handler: Handler<unknown, IResponse> = async (event) => {
-  try {
-    const body = eventSchema.parse(event);
+export const handler: SQSHandler = async (event) => {
+  const statuses = await Promise.allSettled(
+    event.Records.map(async (ev) => {
+      const bodyRaw =
+        typeof ev.body === 'string' ? JSON.parse(ev.body) : ev.body;
+      const body = eventSchema.parse(bodyRaw);
 
-    // Send the webhook request
-    await fetch(body.webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body.data)
-    });
+      // Send the webhook request
+      await fetch(body.webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body.data)
+      });
 
-    return sendResponse({
-      statusCode: HttpStatusCode.OK,
-      message: 'Webhook sent successfully'
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      return sendResponse({
-        statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
-        message: error.message
+      return sendResponse({ batchItemFailures: [] });
+    })
+  );
+
+  const batchedResponse: SQSBatchResponse = { batchItemFailures: [] };
+  statuses.forEach((status, index) => {
+    if (status.status === 'rejected') {
+      batchedResponse.batchItemFailures.push({
+        itemIdentifier: event.Records[index].messageId
       });
     }
-    if (error instanceof ApiError) {
-      return sendResponse({
-        statusCode: error.statusCode,
-        message: error.message
-      });
-    }
-    return sendResponse({
-      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
-      message: 'Unknown error'
-    });
-  }
+  });
+
+  return sendResponse(batchedResponse);
 };

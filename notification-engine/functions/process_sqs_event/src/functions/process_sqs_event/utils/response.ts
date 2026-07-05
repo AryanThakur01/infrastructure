@@ -1,9 +1,7 @@
-import { IResponse } from '../interfaces/response';
+import { SQSBatchResponse } from 'aws-lambda';
 
 export const sendResponse = ({
-  statusCode,
-  data,
-  message
-}: IResponse): IResponse => {
-  return { statusCode, data, message };
+  batchItemFailures
+}: SQSBatchResponse): SQSBatchResponse => {
+  return { batchItemFailures: batchItemFailures || [] };
 };
