@@ -3,3 +3,4 @@ environments/terraform/*.tfvars
 .terraform/
 *.tfstate
 *.tfstate.*
+functions/zips/*
