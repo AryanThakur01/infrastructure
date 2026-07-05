@@ -9,6 +9,9 @@ export const handler: SQSHandler = async (event) => {
         typeof ev.body === 'string' ? JSON.parse(ev.body) : ev.body;
       const body = eventSchema.parse(bodyRaw);
 
+      if (body.data.handleType === 'error')
+        throw new Error('Simulated error for testing purposes');
+
       // Send the webhook request
       await fetch(body.webhookUrl, {
         method: 'POST',

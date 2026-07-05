@@ -7,7 +7,8 @@ export const eventSchema = z.object({
     message: z
       .string()
       .min(1, { message: 'Message cannot be empty' })
-      .max(500, { message: 'Message cannot exceed 500 characters' })
+      .max(500, { message: 'Message cannot exceed 500 characters' }),
+    handleType: z.enum(['success', 'error']),
   })
 });
 
