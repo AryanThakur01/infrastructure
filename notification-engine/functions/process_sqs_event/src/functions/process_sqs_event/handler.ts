@@ -21,8 +21,8 @@ export const handler: Handler<unknown, IResponse> = async (event) => {
     });
 
     return sendResponse({
-      statusCode: HttpStatusCode.NOT_IMPLEMENTED,
-      message: 'This Lambda function is not yet implemented.'
+      statusCode: HttpStatusCode.OK,
+      message: 'Webhook sent successfully'
     });
   } catch (error) {
     if (error instanceof Error) {
