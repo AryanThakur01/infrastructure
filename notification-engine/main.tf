@@ -12,11 +12,11 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "terraform-state-portfolio-aryan"
-    key            = "notification-engine/terraform.tfstate"
-    region         = "ap-south-1"
-    dynamodb_table = "terraform-state-locks"
-    encrypt        = true
+    bucket       = "terraform-state-portfolio-aryan"
+    key          = "notification-engine/terraform.tfstate"
+    region       = "ap-south-1"
+    use_lockfile = true # Native locking and no dynamodb table required
+    encrypt      = true
   }
 }
 

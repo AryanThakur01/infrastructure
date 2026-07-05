@@ -1,9 +1,10 @@
 locals {
   functions = {
-    name = "process_sqs_event"
-    environments = {
-      ENVIRONMENT = "production"
-      LOG_LEVEL   = "info"
+    process_sqs_event = {
+      environments = {
+        ENVIRONMENT = "production"
+        LOG_LEVEL   = "info"
+      }
     }
   }
 }
@@ -24,21 +25,41 @@ data "aws_iam_policy_document" "assume_role" {
 
 # Create the IAM role for Lambda execution
 resource "aws_iam_role" "lambda_execution_role" {
-  name               = "lambda_execution_role"
+  name               = "${var.project_name}-lambda-execution-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
+
+# Create an IAM policy for the Lambda function to allow it to consume messages from SQS queues
+data "aws_iam_policy_document" "worker_permissions" {
+  statement {
+    sid    = "ConsumeQueues"
+    effect = "Allow"
+    actions = [
+      "sqs:ReceiveMessage",
+      "sqs:DeleteMessage",
+      "sqs:GetQueueAttributes",
+    ]
+    resources = [for q in aws_sqs_queue.main : q.arn]
+  }
+}
+
+resource "aws_iam_role_policy" "worker_permissions" {
+  name   = "${var.project_name}-worker-permissions"
+  role   = aws_iam_role.lambda_execution_role.id
+  policy = data.aws_iam_policy_document.worker_permissions.json
+}
 
 # Attach the AWSLambdaBasicExecutionRole policy to the IAM role
 resource "aws_lambda_function" "lambda" {
   for_each = local.functions
 
-  filename         = "${path.module}/functions/zips/${each.value.name}.zip"
-  function_name    = each.value.name
+  filename         = "${path.module}/functions/zips/${each.key}.zip"
+  function_name    = "${var.project_name}-${each.key}"
   role             = aws_iam_role.lambda_execution_role.arn
   handler          = "handler.handler"
   timeout          = 30
-  source_code_hash = filebase64sha256("${path.module}/functions/zips/${replace(each.key, "${var.project_name_env}-", "")}.zip")
+  source_code_hash = filebase64sha256("${path.module}/functions/zips/${each.key}.zip")
 
   runtime = "nodejs24.x"
 
