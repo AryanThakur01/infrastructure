@@ -1,9 +1,9 @@
 {
-  "name": "mandos-file-service",
+  "name": "process-sqs-event",
   "version": "1.0.0",
-  "description": "A file service for Mandos",
+  "description": "A file service for process-sqs-event",
   "license": "ISC",
-  "author": "Mandos",
+  "author": "process-sqs-event",
   "main": "index.js",
   "scripts": {
     "build": "tsc -b src/functions/* && cp package.json dist/process_sqs_event/ && cd dist/process_sqs_event && npm install --production",
