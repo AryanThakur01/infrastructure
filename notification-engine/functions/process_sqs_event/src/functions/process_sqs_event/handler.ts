@@ -7,14 +7,11 @@ import { ApiError } from './utils/errors';
 import { eventSchema } from './schemas';
 
 export const handler: Handler<unknown, IResponse> = async (event) => {
-  console.log('Received event:', JSON.stringify(event, null, 2));
-
   try {
     const body = eventSchema.parse(event);
 
-    const webhookUrl = body.webhookUrl;
-
-    await fetch(webhookUrl, {
+    // Send the webhook request
+    await fetch(body.webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body.data)
