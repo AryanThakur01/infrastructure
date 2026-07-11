@@ -42,6 +42,24 @@ data "aws_iam_policy_document" "worker_permissions" {
     ]
     resources = [for q in aws_sqs_queue.main : q.arn]
   }
+
+  statement {
+    sid    = "TableDataPlaneOnly"
+    effect = "Allow"
+    actions = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:Query",
+      "dynamodb:BatchGetItem",
+      "dynamodb:BatchWriteItem"
+    ]
+    resources = [
+      aws_dynamodb_table.lab.arn,
+      "${aws_dynamodb_table.lab.arn}/index/*"
+    ]
+  }
 }
 
 resource "aws_iam_role_policy" "worker_permissions" {
