@@ -12,7 +12,7 @@ resource "aws_lambda_function" "api" {
   filename      = "${path.module}/functions/zips/api.zip"
   function_name = "${var.project_name}-api"
   role          = aws_iam_role.api_execution_role.arn
-  handler       = "index.handler" # placeholder; NestJS deploy sets its real handler once
+  handler       = "dist/lambda.handler" # placeholder; NestJS deploy sets its real handler once
   runtime       = "nodejs24.x"
   architectures = ["arm64"]
   timeout       = 30
