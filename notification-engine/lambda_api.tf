@@ -42,17 +42,12 @@ resource "aws_lambda_function" "api" {
 }
 
 # Free HTTPS endpoint (no API Gateway cost).
+# CORS is handled by the NestJS app (app.enableCors in src/lambda.ts), not here —
+# setting it in both places emits duplicate Access-Control-Allow-Origin headers,
+# which browsers reject.
 resource "aws_lambda_function_url" "api" {
   function_name      = aws_lambda_function.api.function_name
   authorization_type = "NONE"
-
-  cors {
-    allow_origins  = ["https://www.aryanthakur.dev", "https://aryanthakur.dev"]
-    allow_methods  = ["*"]
-    allow_headers  = ["*"]
-    expose_headers = ["*"]
-    max_age        = 86400
-  }
 }
 
 output "api_function_url" {
