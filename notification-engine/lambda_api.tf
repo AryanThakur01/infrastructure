@@ -59,3 +59,7 @@ output "api_function_url" {
   description = "Public HTTPS endpoint for the NestJS backend"
   value       = aws_lambda_function_url.api.function_url
 }
+output "api_function_arn" {
+  description = "ARN of the NestJS backend Lambda function"
+  value       = aws_lambda_function.api.arn
+}
