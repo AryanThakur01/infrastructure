@@ -1,6 +1,6 @@
 // Variables you need to set
 locals {
-  github_repo       = "AryanThakur01/personal-portfolio"
+  github_repos       = ["AryanThakur01/personal-portfolio", "AryanThakur01/notification-engine"]
   github_thumbprint = "6938fd4d98bab03faadb97b34396831e3780aea1" // GitHub's OIDC thumbprint (rotate if GitHub changes it)
 }
 
@@ -30,7 +30,7 @@ data "aws_iam_policy_document" "github_assume" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values = ["repo:${local.github_repo}:ref:refs/heads/main", "repo:${local.github_repo}:ref:refs/heads/prod"]
+      values   = [for repo in local.github_repos : "repo:${repo}:ref:refs/heads/prod"]
     }
   }
 }
