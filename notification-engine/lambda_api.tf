@@ -8,6 +8,32 @@ resource "aws_iam_role_policy_attachment" "api_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+# The API enqueues notifications (SendMessage) and reads queue depth for /stats
+# (GetQueueAttributes on main + DLQ, GetQueueUrl to resolve the DLQ from its
+# redrive ARN). The role otherwise only has AWSLambdaBasicExecutionRole, so
+# without this every request throws AccessDenied — surfaced as a 400.
+data "aws_iam_policy_document" "api_permissions" {
+  statement {
+    sid    = "ProduceAndInspectQueues"
+    effect = "Allow"
+    actions = [
+      "sqs:SendMessage",
+      "sqs:GetQueueAttributes",
+      "sqs:GetQueueUrl",
+    ]
+    resources = concat(
+      [for q in aws_sqs_queue.main : q.arn],
+      [for q in aws_sqs_queue.dlq : q.arn],
+    )
+  }
+}
+
+resource "aws_iam_role_policy" "api_permissions" {
+  name   = "${var.project_name}-api-permissions"
+  role   = aws_iam_role.api_execution_role.id
+  policy = data.aws_iam_policy_document.api_permissions.json
+}
+
 resource "aws_lambda_function" "api" {
   filename      = "${path.module}/functions/zips/api.zip"
   function_name = "${var.project_name}-api"
