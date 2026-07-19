@@ -54,6 +54,12 @@ data "aws_iam_policy_document" "deploy_permissions" {
     actions   = ["s3:PutObject", "s3:DeleteObject"]
     resources = ["${aws_s3_bucket.portfolio.arn}/*"] // objects, with /*
   }
+
+  statement {
+    sid       = "UpdateLambdaFunctionCode"
+    actions   = ["lambda:UpdateFunctionCode"]
+    resources = ["arn:aws:lambda:ap-south-1:980989823308:function:notification-engine-api"] // notification engine lambda function ARN
+  }
 }
 
 resource "aws_iam_role_policy" "deploy" {
