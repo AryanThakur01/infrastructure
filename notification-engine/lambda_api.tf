@@ -12,7 +12,7 @@ resource "aws_lambda_function" "api" {
   filename      = "${path.module}/functions/zips/api.zip"
   function_name = "${var.project_name}-api"
   role          = aws_iam_role.api_execution_role.arn
-  handler       = "dist/lambda.handler" # placeholder; NestJS deploy sets its real handler once
+  handler       = "dist/lambda.handler" # dist/lambda.js -> exported `handler`
   runtime       = "nodejs24.x"
   architectures = ["arm64"]
   timeout       = 30
@@ -32,11 +32,11 @@ resource "aws_lambda_function" "api" {
   }
 
   lifecycle {
-    # Code + handler are owned by the NestJS deploy; env stays managed here.
+    # Only the CODE artifact is owned by the NestJS deploy (update-function-code).
+    # Handler + env stay managed here so Terraform keeps them correct.
     ignore_changes = [
       filename,
       source_code_hash,
-      handler,
     ]
   }
 }
